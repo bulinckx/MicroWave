@@ -177,7 +177,7 @@ namespace Service
             return this._microwave.Status;
         }
 
-        public String CancelJob()
+        public String Cancel()
         {
             this._microwave.CancelJob();
             this._microwave.OverridePotency(_defaultPotency);

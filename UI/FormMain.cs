@@ -181,7 +181,7 @@ namespace UI
 
         private void btnCancel_Click(object sender, System.EventArgs e)
         {
-            txtInputString.Text = Wrap(() => _service.CancelJob());
+            txtInputString.Text = Wrap(() => _service.Cancel());
             SetDefaultValues(Wrap(() => _service.GetMicroWave()));
             btnStart.Text = "START";
         }

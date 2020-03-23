@@ -15,7 +15,7 @@ namespace Domain.Interface
         void ResetTimeleft(DateTime timeleft);
         void SetJobTemplate(JobTemplate template);
         MicroWaveStatus GetStatus();
-        String CancelJob();
+        String Cancel();
         DigitalMicroWave GetMicroWave();
         IList<JobTemplate> SaveTemplate(JobTemplate newTemplate);
         IList<JobTemplate> DeleteTemplate(JobTemplate template, MealKind? mealkind);
