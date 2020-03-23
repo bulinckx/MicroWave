@@ -19,5 +19,7 @@ namespace Domain.Interface
         DigitalMicroWave GetMicroWave();
         IList<JobTemplate> SaveTemplate(JobTemplate newTemplate);
         IList<JobTemplate> DeleteTemplate(JobTemplate template, MealKind? mealkind);
+        void Pause();
+        void Resume();
     }
 }

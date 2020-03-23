@@ -136,15 +136,36 @@ namespace UI
                     SetWatch(template.TimeLeft);
 
                     txtInputString.Text = _service.SerializeCurrentJobTemplateToJson();
-                    WrapVoid(() => _service.Start(txtInputString.Text));
+                    PauseStart();
                 }
             }
             else txtOutput.Text = "Microwave is already running a job";
         }
 
+        private void PauseStart()
+        {
+            switch (_service.GetStatus())
+            {
+                case MicroWaveStatus.Ready:
+                case MicroWaveStatus.JobLess:
+                    WrapVoid(() => _service.Start(txtInputString.Text));
+                    btnStart.Text = "PAUSE";
+                    break;
+                case MicroWaveStatus.DoorOpen:
+                    WrapVoid(() => _service.Resume());
+                    btnStart.Text = "PAUSE";
+                    break;
+                case MicroWaveStatus.Running:
+                    WrapVoid(() => _service.Pause());
+                    btnStart.Text = "START";
+                    break;
+                default: break;
+            }
+        }
+
         private void btnStart_Click(object sender, System.EventArgs e)
         {
-            WrapVoid(() => _service.Start(txtInputString.Text));
+            PauseStart();
         }
 
         private void btnCancel_Click(object sender, System.EventArgs e)

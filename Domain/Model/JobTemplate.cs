@@ -31,8 +31,6 @@ namespace Domain.Model
         public Boolean Default { get; set; } = false;
 
         public Guid Id { get; private set; }
-
-        //public String PotencyName { get { return Potency.ToString(); } }
     }
 
     /// <summary>
@@ -45,7 +43,7 @@ namespace Domain.Model
         public Potency Potency { get; set; }
         public Int16 TimeLeft { get; set; }
         public String Name { get; set; }
-        public MealKind MealKind { get; set; }
+        public MealKind? MealKind { get; set; }
         public String Instructions { get; set; }
         public Boolean CanDelete { get; set; }
         public Boolean Default { get; set; }

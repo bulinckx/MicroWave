@@ -207,7 +207,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(22, 121);
+            this.label1.Location = new System.Drawing.Point(24, 118);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 18);
@@ -264,13 +264,13 @@
             // btnStartTemplate
             // 
             this.btnStartTemplate.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnStartTemplate.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStartTemplate.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnStartTemplate.Location = new System.Drawing.Point(0, 242);
             this.btnStartTemplate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnStartTemplate.Name = "btnStartTemplate";
             this.btnStartTemplate.Size = new System.Drawing.Size(268, 44);
             this.btnStartTemplate.TabIndex = 6;
-            this.btnStartTemplate.Text = "START";
+            this.btnStartTemplate.Text = "START TEMPLATE";
             this.btnStartTemplate.UseVisualStyleBackColor = true;
             this.btnStartTemplate.Click += new System.EventHandler(this.btnStartTemplate_Click);
             // 

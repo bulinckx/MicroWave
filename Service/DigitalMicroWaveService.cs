@@ -141,7 +141,7 @@ namespace Service
 
         public void ResetPotency(Decimal potency)
         {
-            if (this._microwave.Status == MicroWaveStatus.Running)
+            if (this._microwave.Status == MicroWaveStatus.Running || this._microwave.Status == MicroWaveStatus.DoorOpen)
                 throw new Exception("A potência não pode ser alterada durante o aquecimento.");
 
             ValidatePotency((Int32)potency);
@@ -151,7 +151,7 @@ namespace Service
 
         public void ResetTimeleft(DateTime timeleft)
         {
-            if (this._microwave.Status == MicroWaveStatus.Running)
+            if (this._microwave.Status == MicroWaveStatus.Running || this._microwave.Status == MicroWaveStatus.DoorOpen)
                 throw new Exception("O tempo restante não pode ser alterado durante o aquecimento.");
 
             Int16 seconds = (Int16)(timeleft.Second + 60.0 * timeleft.Minute);
@@ -181,6 +181,16 @@ namespace Service
         public DigitalMicroWave GetMicroWave()
         {
             return this._microwave;
+        }
+
+        public void Pause()
+        {
+            this._microwave.PauseJob();
+        }
+
+        public void Resume()
+        {
+            this._microwave.ResumeJob();
         }
     }
 }

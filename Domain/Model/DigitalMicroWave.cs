@@ -116,6 +116,12 @@ namespace Domain.Model
             this.CurrentJob.Pause();
         }
 
+        public void ResumeJob()
+        {
+            this.Status = MicroWaveStatus.Running;
+            this.CurrentJob.Resume();
+        }
+
         public void CancelJob()
         {
             this.Status = MicroWaveStatus.JobLess;

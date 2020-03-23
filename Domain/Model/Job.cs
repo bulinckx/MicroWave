@@ -51,16 +51,16 @@ namespace Domain.Model
             this.Status = JobStatus.Paused;
         }
 
+        public void Resume()
+        {
+            this.Status = JobStatus.Running;
+        }
+
         public void Start()
         {
             this.Status = JobStatus.Running;
             Dotz = String.Empty.PadLeft((Int32)this.Potency, '.');
         }
-
-        //private void AddDots()
-        //{
-        //    Dotz = Dotz + String.Empty.PadLeft((Int32)this.Potency, '.');
-        //}
 
         public void Tick()
         {
@@ -74,7 +74,6 @@ namespace Domain.Model
                     else
                     {
                         this.TimeLeft--;
-                        //AddDots();
                     }
                     break;
                 default: break;
