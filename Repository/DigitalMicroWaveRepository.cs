@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 
 namespace Repository
 {
@@ -23,6 +22,7 @@ namespace Repository
                 CanDelete = false,
                 Name = "Chicken",
                 MealKind = MealKind.Chicken,
+                Dot = '$',
                 Instructions = "Instructions for defrost Chicken."
             });
 
@@ -32,6 +32,7 @@ namespace Repository
                 CanDelete = false,
                 Name = "Popcorn",
                 MealKind = null,
+                Dot = '*',
                 Instructions = "Instructions for Popcorn."
             });
 
@@ -41,6 +42,7 @@ namespace Repository
                 CanDelete = false,
                 Name = "Minimal meal",
                 MealKind = null,
+                Dot = '`',
                 Instructions = "Instructions for cooking a minimal meal."
             });
 
@@ -50,6 +52,7 @@ namespace Repository
                 CanDelete = false,
                 Name = "Nursing bottle",
                 MealKind = null,
+                Dot = '&',
                 Instructions = "Instructions for a slight hot nursing bottle."
             });
 
@@ -59,6 +62,7 @@ namespace Repository
                 CanDelete = false,
                 Name = "Cheese",
                 MealKind = MealKind.Cheese,
+                Dot = '@',
                 Instructions = "Instructions for five cheese surprise."
             });
 

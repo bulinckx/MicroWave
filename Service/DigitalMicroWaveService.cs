@@ -32,17 +32,24 @@ namespace Service
 
         public DigitalMicroWave Initialize()
         {
-            var fullpath = _repo.GetCurrentPath(_templateFileName);
+            try
+            {
+                var fullpath = _repo.GetCurrentPath(_templateFileName);
 
-            var savedTemplates = _repo.ReadTemplatesFromFile(fullpath);
-            this._microwave = new DigitalMicroWave(savedTemplates, _defaultTime, _defaultPotency);
+                var savedTemplates = _repo.ReadTemplatesFromFile(fullpath);
+                this._microwave = new DigitalMicroWave(savedTemplates, _defaultTime, _defaultPotency);
 
-            _autoEvent = new AutoResetEvent(false);
+                _autoEvent = new AutoResetEvent(false);
 
-            if (_timer == null)
-                _timer = new Timer(this._microwave.Tick, _autoEvent, 1000, 1000);
+                if (_timer == null)
+                    _timer = new Timer(this._microwave.Tick, _autoEvent, 1000, 1000);
 
-            return this._microwave;
+                return this._microwave;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Falha ao tentar inicializar o microondas:{ex.Message}", ex);
+            }
         }
 
         public IList<JobTemplate> GetTemplateByNameKind(String name, MealKind? kind)
@@ -191,6 +198,21 @@ namespace Service
         public void Resume()
         {
             this._microwave.ResumeJob();
+        }
+
+        public void PersistTemplates()
+        {
+            try
+            {
+                var fullpath = _repo.GetCurrentPath(_templateFileName);
+                IList<JobTemplate> templates = this._microwave.GetTemplateByNameKind(String.Empty, null);
+
+                 _repo.SaveTemplatesToFile(fullpath, templates);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Falha ao tentar inicializar o microondas:{ex.Message}", ex);
+            }
         }
     }
 }

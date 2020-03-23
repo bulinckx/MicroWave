@@ -21,5 +21,7 @@ namespace Domain.Interface
         IList<JobTemplate> DeleteTemplate(JobTemplate template, MealKind? mealkind);
         void Pause();
         void Resume();
+
+        void PersistTemplates();
     }
 }

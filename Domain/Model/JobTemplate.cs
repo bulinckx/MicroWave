@@ -26,6 +26,8 @@ namespace Domain.Model
         public String Name { get; set; } = "New Job";
         public MealKind? MealKind { get; set; }
 
+        public Char Dot { get; set; } = '.';
+
         public String Instructions { get; set; }
         public Boolean CanDelete { get; set; } = true;
         public Boolean Default { get; set; } = false;
@@ -44,11 +46,11 @@ namespace Domain.Model
         public Int16 TimeLeft { get; set; }
         public String Name { get; set; }
         public MealKind? MealKind { get; set; }
+        public Char Dot { get; set; }
         public String Instructions { get; set; }
         public Boolean CanDelete { get; set; }
         public Boolean Default { get; set; }
         public Guid Id { get; set; }
-
 
         public JobTemplate Get()
         {
@@ -58,6 +60,7 @@ namespace Domain.Model
                 Default = Default,
                 Name = Name,
                 Instructions = Instructions,
+                Dot = Dot
             };
         }
     }

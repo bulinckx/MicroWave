@@ -57,4 +57,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="txtInputString.Text" xml:space="preserve">
+    <value>{
+  "Name": "New Job",
+  "MealKind": null,
+  "Dot": ".",
+  "Instructions": null,
+  "CanDelete": true,
+  "Default": false,
+  "Id": "1bbfac76-5a78-4687-b3d5-528d382d39a5",
+  "Potency": 8,
+  "TimeLeft": 30
+}</value>
+  </data>
 </root>

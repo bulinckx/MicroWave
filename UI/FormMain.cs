@@ -26,14 +26,19 @@ namespace UI
             switch (microwave.Status)
             {
                 case MicroWaveStatus.Ready:
-                    MessageBox.Show("Aquecimento conluído!");
+                    mainform.InvokeAnywhere(c => MessageBox.Show(c, "AQUECIDA")); // passing form as owner so MessageBox behave as modal
                     mainform.InvokeAnywhere(c => c.SetWatch(microwave.TimeLeft));
+                    mainform.InvokeAnywhere(c => c.btnStart.Text = "START");
                     break;
                 case MicroWaveStatus.Running:
                     mainform.InvokeAnywhere(c => c.txtInputString.Text = c.txtInputString.Text + microwave.CurrentJob.Dotz);
-                    mainform.InvokeAnywhere(c => c._timerReadOnly = false);
-                    mainform.InvokeAnywhere(c => c.SetWatch(microwave.CurrentJob.TimeLeft));
-                    mainform.InvokeAnywhere(c => c._timerReadOnly = true);
+
+                    if (microwave.CurrentJob != null)
+                    {
+                        mainform.InvokeAnywhere(c => c._timerReadOnly = false);
+                        mainform.InvokeAnywhere(c => c.SetWatch(microwave.CurrentJob.TimeLeft));
+                        mainform.InvokeAnywhere(c => c._timerReadOnly = true);
+                    }
                     break;
                 case MicroWaveStatus.DoorOpen: break;
                 case MicroWaveStatus.JobLess: break;
@@ -59,6 +64,10 @@ namespace UI
             tt.IsBalloon = true;
             tt.SetToolTip(btnStartTemplate, "Click to Start form a Template.");
             tt.SetToolTip(btnStart, "Click to Start/Pause.");
+            tt.SetToolTip(btnAddTemplate, "Add a template using the actual parameters for potency and time left, also uses the search string as name and the output string as instructions.");
+            tt.SetToolTip(lbxTemplate, "Double click to serialize template to InputString without starting a job.");
+            tt.SetToolTip(btnCancel, "Cancel any current job and resets microwave to default values.");
+            tt.SetToolTip(btnSearch, "Fetches all templates, pre made or not matches selected kind of meal and contains the search string, a empty string returns all.");
         }
 
         public void SetWatch(Int16 seconds)
@@ -114,7 +123,9 @@ namespace UI
             {
                 SystemSounds.Hand.Play();
                 txtOutput.Text = ex.Message;
-                txtPotency.Value = (Decimal)_service.GetMicroWave().CurrentJob.Potency;
+                var job = Wrap(() => _service.GetMicroWave().CurrentJob);
+                if (job != null)
+                    txtPotency.Value = (Decimal)job.Potency;
             }
         }
 
@@ -172,6 +183,7 @@ namespace UI
         {
             txtInputString.Text = Wrap(() => _service.CancelJob());
             SetDefaultValues(Wrap(() => _service.GetMicroWave()));
+            btnStart.Text = "START";
         }
 
         private void btnTranslate_Click(object sender, System.EventArgs e)
@@ -197,7 +209,8 @@ namespace UI
                 Default = false,
                 Instructions = txtOutput.Text,
                 Name = txtSearchTemplate.Text,
-                MealKind = GetSelectedMealKind()
+                MealKind = GetSelectedMealKind(),
+                Dot = txtSearchTemplate.Text[0]
             };
 
             var ds = Wrap(() => _service.SaveTemplate(newJobTemplate));
@@ -245,6 +258,33 @@ namespace UI
         {
             if (_timerReadOnly)
                 WrapVoid(() => _service.ResetTimeleft(dtpTimer.Value));
+        }
+
+        private void lbxTemplate_DoubleClick(object sender, EventArgs e)
+        {
+            if (_service.GetStatus() == MicroWaveStatus.Ready || _service.GetStatus() == MicroWaveStatus.JobLess)
+            {
+                var template = (JobTemplate)lbxTemplate.SelectedItem;
+
+                if (template == null)
+                {
+                    txtOutput.Text = "No template selected";
+                }
+                else
+                {
+                    _service.SetJobTemplate(template);
+
+                    txtPotency.Value = (Decimal)template.Potency;
+                    SetWatch(template.TimeLeft);
+
+                    txtInputString.Text = _service.SerializeCurrentJobTemplateToJson();
+                }
+            }
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            WrapVoid(() => _service.PersistTemplates());
         }
     }
 }

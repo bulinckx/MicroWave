@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label4 = new System.Windows.Forms.Label();
             this.txtOutput = new System.Windows.Forms.TextBox();
@@ -120,9 +121,7 @@
             this.txtInputString.Name = "txtInputString";
             this.txtInputString.Size = new System.Drawing.Size(617, 540);
             this.txtInputString.TabIndex = 2;
-            this.txtInputString.Text = "{\r\n  \"Name\": \"New Job\",\r\n  \"MealKind\": 0,\r\n  \"Instructions\": null,\r\n  \"CanDelete\"" +
-    ": true,\r\n  \"Default\": false,\r\n  \"Id\": \"98202e22-81fd-40ab-ac8e-bdb0eed9ad4c\",\r\n " +
-    " \"Potency\": 8,\r\n  \"TimeLeft\": 30\r\n}";
+            this.txtInputString.Text = resources.GetString("txtInputString.Text");
             // 
             // label2
             // 
@@ -260,6 +259,7 @@
             this.lbxTemplate.Name = "lbxTemplate";
             this.lbxTemplate.Size = new System.Drawing.Size(264, 223);
             this.lbxTemplate.TabIndex = 1;
+            this.lbxTemplate.DoubleClick += new System.EventHandler(this.lbxTemplate_DoubleClick);
             // 
             // btnStartTemplate
             // 
@@ -422,6 +422,7 @@
             this.Name = "FormMain";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Benner: Digital Microwave 2020++";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

@@ -59,7 +59,7 @@ namespace Domain.Model
         public void Start()
         {
             this.Status = JobStatus.Running;
-            Dotz = String.Empty.PadLeft((Int32)this.Potency, '.');
+            Dotz = String.Empty.PadLeft((Int32)this.Potency, this.Template.Dot);
         }
 
         public void Tick()
