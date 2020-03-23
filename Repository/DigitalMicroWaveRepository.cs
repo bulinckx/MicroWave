@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -97,6 +98,37 @@ namespace Repository
         public String GetCurrentPath(String fileName)
         {
             return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + fileName;
+        }
+
+        public Boolean TryGetFullPath(String path, out String result)
+        {
+            result = String.Empty;
+            if (String.IsNullOrWhiteSpace(path))
+                return false;
+
+            Boolean status = false;
+
+            try
+            {
+                result = Path.GetFullPath(path);
+                status = true;
+            }
+            catch (ArgumentException) { }
+            catch (SecurityException) { }
+            catch (NotSupportedException) { }
+            catch (PathTooLongException) { }
+
+            return status;
+        }
+
+        public String ReadTextFile(String fullpath)
+        {
+            if (File.Exists(fullpath))
+            {
+                return File.ReadAllText(fullpath);
+            }
+            else
+                throw new Exception($"Cannot find file:{fullpath}");
         }
     }
 }

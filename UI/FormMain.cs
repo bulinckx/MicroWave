@@ -105,6 +105,7 @@ namespace UI
             {
                 SystemSounds.Hand.Play();
                 txtOutput.Text = ex.Message;
+                btnStart.Text = "START";
                 return default(T);
             }
         }
@@ -123,6 +124,7 @@ namespace UI
             {
                 SystemSounds.Hand.Play();
                 txtOutput.Text = ex.Message;
+                btnStart.Text = "START";
                 var job = Wrap(() => _service.GetMicroWave().CurrentJob);
                 if (job != null)
                     txtPotency.Value = (Decimal)job.Potency;
@@ -159,12 +161,12 @@ namespace UI
             {
                 case MicroWaveStatus.Ready:
                 case MicroWaveStatus.JobLess:
-                    WrapVoid(() => _service.Start(txtInputString.Text));
                     btnStart.Text = "PAUSE";
+                    WrapVoid(() => _service.Start(txtInputString.Text));
                     break;
                 case MicroWaveStatus.DoorOpen:
-                    WrapVoid(() => _service.Resume());
                     btnStart.Text = "PAUSE";
+                    WrapVoid(() => _service.Resume());
                     break;
                 case MicroWaveStatus.Running:
                     WrapVoid(() => _service.Pause());

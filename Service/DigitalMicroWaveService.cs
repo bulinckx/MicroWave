@@ -77,13 +77,22 @@ namespace Service
         {
             if (this._microwave.Status == MicroWaveStatus.Ready || this._microwave.Status == MicroWaveStatus.JobLess)
             {
-                if (false)
+                try
                 {
-                    //TODO:ler de arquivo
+                    String absolutePath = String.Empty;
+                    if (_repo.TryGetFullPath(inputString, out absolutePath))
+                    {
+                        String templateJson = _repo.ReadTextFile(absolutePath);
+                        StartFromInputString(templateJson);
+                    }
+                    else
+                    {
+                        StartFromInputString(inputString);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    StartFromInputString(inputString);
+                    throw new Exception($"Falha ao tentar estartar job:{ex.Message}");
                 }
             }
             else
@@ -207,7 +216,7 @@ namespace Service
                 var fullpath = _repo.GetCurrentPath(_templateFileName);
                 IList<JobTemplate> templates = this._microwave.GetTemplateByNameKind(String.Empty, null);
 
-                 _repo.SaveTemplatesToFile(fullpath, templates);
+                _repo.SaveTemplatesToFile(fullpath, templates);
             }
             catch (Exception ex)
             {
