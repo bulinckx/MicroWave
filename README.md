@@ -1,3 +1,42 @@
+Está aplicação foi construída bottom up
+usando .Net core 3.1 no
+Microsoft Visual Studio Community 2019
+Versão 16.6.0 Preview 1.0
+
+A UI foi criada usando Winforms no .Net core que finalmente foi disponibilizada
+(mas que bugou no Visual Studio 16.5 depois de um dia de trabalho)
+O controle de versão foi feito usando o GitKraken, que é free para repositórios públicos
+(O VS tb bugou ao tentar dar push p/ o Github)
+
+O projeto de testes foi criado usando NUnit.
+
+Foi usada injeção de dependência para separar bem a UI do service e do repository.
+Há um repository pois há persistência, mesmo sem usar DB.
+Isso possibilitou usar uma filosofia semlhante a quando se faz backend, onde o back não tem idéia da corretude dos parâmetros que virão do front e deve se preparar p/ o pior.
+
+Não houve muita necessidade de Design Patterns além do singleton. Há um quasi-decorator na forma de um método Wrap mas não chega a ser um DP pq está tratando métodos e não classes.
+Sempre implemento com KISS e o princípio da separação em mente, nenhum método ficou demasiadamente extenso.
+
+Há uns poucos comentários/summary (e tooltips na UI) que julguei necessários, no resto espero que a implementação esteja clara o suficiente.
+Quase tudo está em inglês por puro hábito de trabalhar nesse padrão, outro padrão que adquiri e o de usar o System como, por exemplo, em system.String.
+
+Como o teste exigiu o uso de strings, pelo menos usei json para padronizar a entrada.
+Não criei um form de cadastro de templates (programas de aquecimento) para manter a interface o mais próxima de um microondas real
+e ter que lidar com input indesejado, por exemplo tentativas de mudança de parâmetros durante um aquecimento.
+Coisa que ocorre muito também quando ser lida com back-front.
+
+Na modelagem separei o job de aquecimento do microondas para ter mais controle sobre ele e isso facilitou a questão dos JobTemplates (os programas de aquecimento).
+Apesar de, no final, o controle de estado do current job e do microondas terem ficado redundantes. Modelei assim pensando num microondas singleton respondendo a múltiplas chamadas do front (de novo hábito).
+Tentei deixar todas a regra de negócio no service, na UI só questões de interface com o usuário e nas classes só aquilo que seria responsabilidade de cada uma.
+
+Nos testes tentei cobrir as exceções de validação lançadas.
+Por conta do controle de estado, por exmeplo: start/pause/resume/cancel, vários testes tem múltiplas chamadas para o service.
+
+No mais a novidade, p/ mim, foi trabalhar com eventos do back p/ o front.
+O trabalho todo levou em torno de vinte horas mas umas duas horas de revisão de código.
+
+					*	*	*
+
 Avaliação C# e Orientação a Objeto
 Objetivo
 Programar em C# um MICRO-ONDAS DIGITAL.
